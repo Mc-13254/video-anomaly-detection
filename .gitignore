@@ -1,0 +1,13 @@
+# .gitignore
+__pycache__/
+*.pyc
+*.npy
+*.avi
+*.tif
+data/
+frames/
+saved_models/
+results/
+.DS_Store
+.vscode/
+.ipynb_checkpoints/
