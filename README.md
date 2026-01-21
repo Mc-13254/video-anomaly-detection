@@ -1,4 +1,7 @@
 #  Video Anomaly Detection
+[![Demo Video]](https://github.com/Mc-13254/video-anomaly-detection/blob/main/final_demo_with_subtitles.mp4)
+
+A real-time unsupervised anomaly detection system that explains its decisions using Grad-CAM and LIME.
 
 ![Anomaly Detection Example](results/anomaly_scores.png)
 

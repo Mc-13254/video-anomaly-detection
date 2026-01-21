@@ -1,0 +1,26 @@
+1
+00:00:00,000 --> 00:00:35,000
+This is my unsupervised video anomaly detection system.
+
+2
+00:00:35,000 --> 00:01:02,000
+Trained only on normal data — no anomaly labels needed.
+
+3
+00:01:02,000 --> 00:01:20,000
+High reconstruction error = anomaly detected.
+
+4
+00:01:20,000 --> 00:02:05,000
+Grad-CAM and LIME explain where the anomaly is.
+
+5
+00:02:10,000 --> 00:02:43,000
+Spikes in this graph show unusual events like cars in pedestrian zones.
+
+6
+00:02:45,000 --> 00:03:00,000
+All code and results are on GitHub https://github.com/Mc-13254/video-anomaly-detection
+
+
+

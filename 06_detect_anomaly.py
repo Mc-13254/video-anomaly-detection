@@ -5,18 +5,12 @@ import matplotlib
 matplotlib.use('Agg')  # Prevent GUI freeze
 import matplotlib.pyplot as plt
 import os
-import cv2  # ← ADD THIS (required for Grad-CAM)
+import cv2
 
 from models.autoencoder import ConvAutoencoder
-from models.gradcam import GradCAM  # ← Make sure this exists
+from models.gradcam import GradCAM
 from utils.dataset import VideoFrameDataset
 from torch.utils.data import DataLoader
-# --- ADD LIME ---
-import skimage
-from utils.lime_explainer import explain_with_lime
-
-lime_img = explain_with_lime(model, orig, device)
-plt.imsave(f"results/frame_{i}_lime.png", lime_img)
 
 # Create results folder
 os.makedirs("results", exist_ok=True)
@@ -70,11 +64,9 @@ for i, (frame, label) in enumerate(test_loader):
         plt.close()
 
         # --- GRAD-CAM ---
-        target_layer = model.encoder[-2]  # second-to-last layer
+        target_layer = model.encoder[-2]
         cam = GradCAM(model, target_layer)
         heatmap = cam(frame)
-
-        # Resize and overlay
         heatmap = cv2.resize(heatmap, (224, 224))
         heatmap = np.uint8(255 * heatmap)
         cam_img = cv2.applyColorMap(heatmap, cv2.COLORMAP_JET)
@@ -82,6 +74,13 @@ for i, (frame, label) in enumerate(test_loader):
         orig_bgr = cv2.cvtColor(orig_bgr, cv2.COLOR_RGB2BGR)
         overlay = cv2.addWeighted(orig_bgr, 0.6, cam_img, 0.4, 0)
         cv2.imwrite(f"results/frame_{i}_gradcam.png", overlay)
+
+        # --- LIME (MOVED INSIDE THE LOOP!) ---
+        from utils.lime_explainer import explain_with_lime
+        import skimage  # needed for mark_boundaries
+        lime_img = explain_with_lime(model, orig, device)
+        plt.imsave(f"results/frame_{i}_lime.png", lime_img)
+        plt.close()
 
 # --- Final Graph ---
 plt.figure(figsize=(12, 4))
